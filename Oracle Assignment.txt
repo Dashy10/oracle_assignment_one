@@ -1,0 +1,326 @@
+﻿Dashiell Lumas
+Oracle Assignment
+
+
+1. 
+CREATE table department (
+Department_id number,
+Department_name VARCHAR(30),
+Department_block_number number
+CONSTRAINT department_pk PRIMARY KEY (Department_id)
+);
+
+
+2. 
+CREATE table student (
+Department_id number,
+Student_id number,
+Student_name VARCHAR(30),
+Address VARCHAR(40),
+City VARCHAR(30),
+CONSTRAINT fk_department
+FOREIGN KEY (department_id)
+REFERENCES department(department_id)
+);
+
+
+3.
+CREATE table staff(
+Department_id number,
+Staff_id number,
+Staff_name VARCHAR(30),
+CONSTRAINT fk_staff
+FOREIGN KEY( department_id)
+REFERENCES department(department_id)
+);
+
+
+4.
+CREATE table subject(
+Staff_id number,
+Subject_id number,
+Student_name VARCHAR(30),
+Student_code VARCHAR(10),
+CONSTRAINT fk_staff
+FOREIGN KEY (staff_id)
+REFERENCES staff(staff_id)
+CONSTRAINT subject_pk PRIMARY KEY (subject_id)
+);
+
+
+
+
+
+
+5. CREATE table mark(
+Value_mark number,
+Subject_id number,
+Student_id number,
+CONSTRAINT pk_mark PRIMARY KEY (subject_id, student_id),
+CONSTRAINT fk_table
+FOREIGN KEY (subject_id)
+REFERENCES subject(subject_id),
+CONSTRAINT fk_table
+FOREIGN KEY (student_id)
+REFERENCES student(student_ids)  
+);
+
+
+6. ALTER table staff
+MODIFY (staff_name NOT NULL);
+
+
+7. ALTER table student
+ADD(
+Email_id VARCHAR(20)
+);
+
+
+8. ALTER table student
+MODIFY(
+Email_id VARCHAR(50)
+);
+
+
+9. ALTER table student
+DROP COLUMN
+Email_id;
+
+
+12. UPDATE  table subject
+SET subject_name = ‘Computer Science’,
+Subject_id = ‘1919’,
+WHERE subject_id = ‘1842’;
+
+
+13. DELETE FROM subject
+WHERE subject_name =’Accounting’;
+
+
+14. SELECT department_name FROM department ORDER BY department_name ASC;
+
+
+15. Select department_name FROM department WHERE department_id > 3 AND department_id < 10;
+16. SELECT student_name FROM student ORDER BY student_name ASC;
+
+
+17. SELECT student_name FROM student WHERE city IN ’Chicago, Taylor, San Jose’ ORDER BY student_id ASC;
+
+
+18. SELECT (address,city) FROM student Address_Student;
+
+
+19. SELECT student_name FROM student WHERE LENGTH(student_name = 6);  
+
+
+20. SELECT department_block_number, COUNT(department_name) FROM department ORDER BY department_block_number ASC;
+
+
+21. SELECT COUNT(student_id) AS stud_count FROM student;
+
+
+22. SELECT d.department_name, COUNT (s.student_id) AS “student_count”
+FROM department d INNER JOIN student s
+ON d.departmenT_id  = s.department_id
+ORDER BY d.department_name ASC;
+
+
+23.  SELECT student_name
+FROM student
+UNION
+SELECT subject_name
+FROM subject
+WHERE subject_code >1600;
+
+
+24. SELECT student.student_name, subject.subject_name
+FROM Student, Subject
+INNER JOIN STUDENT
+ON student.student_id = mark.value_mark;
+INNER JOIN Student subject.subject_id = mark.value_mark;
+WHERE mark.value_mark <3 ;
+
+
+25. 
+SELECT department_block_number
+FROM (SELECT department_block_number,
+COUNT(department_block_number))
+FROM department
+ORDER BY COUNT(department_block_number) DESC);
+
+
+26. SELECT staff_name FROM staff
+WHERE staff_id
+NOT IN (SELECT staff_id FROM subject);
+
+
+27. CREATE OR REPLACE FUNCTION find_dept_name (department_id number)
+RETURN varchar2
+AS
+L_dname department.department_name%type;
+BEGIN
+SELECT department_name into l_dname
+FROM department
+WHERE department_id = department_id;
+RETURN l_dname;
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+28. CREATE OR REPLACE function find_dept_block(department_block_numbern number)
+Return number
+AS 
+l_dep_block department.department_block_number%type;
+BEGIN
+SELECT department_block_number into l_dep_block
+FROM department
+WHERE department_id  =department_id;
+RETURN l_dep_block;
+END;
+
+
+
+
+29. CREATE OR REPLACE function find_staff_name (staff_id in number, staff_name out varchar2)
+AS
+BEGIN
+SELECT department_block_number into department_block_number FROM department
+WHERE department_id = department_id
+
+
+RETURN staff_name;
+END;
+
+
+30. CREATE OR REPLACE TRIGGER trigger_department_af_update
+AFTER UPDATE 
+ON
+Department
+BEGIN
+If updating then
+dbms_output.put_line(‘DEPARTMENTS table has been updated’)
+End if;
+end;
+
+
+31. CREATE OR REPLACE TRIGGER trigger_department_bf_delete
+Before DELETE 
+ON department
+Begin
+If deleting then
+dbms_output.put_line(‘A row has been deleted from department’);
+End if;
+End;
+
+
+
+
+
+
+32. CREATE INDEX on_student
+ON student(CASE WHEN student_name = ‘%b%’
+THEN student_name
+ELSE
+Null
+End;
+)
+
+
+
+
+
+
+33. CREATE VIEW staff_name
+AS 
+SELECT staff_name
+FROM staff;
+
+
+36. CREATE OR REPLACE PROCEDURE Student
+IS
+CURSOR student_cursor IS SELECT * FROM student;
+Student_data student_cursor%ROWTYPE;
+BEGIN
+OPEN student_cursor;
+LOOP
+FETCH student_cursor INTO student_data;
+EXIT WHEN student_cursor%NOTFOUND;
+dbms_output.put_line(student_data.name, student_data.city, student_data.address, student_data.student_id, student_data.department_id);
+END LOOP;
+CLOSE student_cursor;
+END;
