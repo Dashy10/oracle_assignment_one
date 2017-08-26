@@ -324,3 +324,44 @@ dbms_output.put_line(student_data.name, student_data.city, student_data.address,
 END LOOP;
 CLOSE student_cursor;
 END;
+
+37. CREATE or REPLACE PACKAGE body College AS 
+    procedure select_departments(total_dept out varchar)
+    as 
+    begin
+      total_dep := (SELECT department_name FROM Department);
+    end select_department;
+    
+    function select_student (total_student_id in number)
+      return varchar
+    as
+    begin
+      return(student_name);
+    end select_student;
+end College;
+
+ CREATE PACKAGE body College AS 
+
+PROCEDURE  select_department()
+AS
+    Begin
+CURSOR student_cursor IS SELECT * FROM department;
+    student_data student_cursor%ROWTYPE;
+BEGIN
+    OPEN student_cursor;
+    LOOP
+        FETCH student_cur INTO myvariable;
+        EXIT WHEN student_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(DEPARTMENT.student_name || DEPARTMENT.student_age || DEPARTMENT.student_address ||);
+    END LOOP;
+    CLOSE student_cursor;
+END;
+create or replace function select_student (student_id in number, student_name  out varchar2 ) 
+  as
+  begin
+
+  select student name into student_name  from student  
+    where student.studentid= student_id;
+    return student_name  ;
+end;
+END College;
